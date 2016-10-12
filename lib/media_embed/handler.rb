@@ -18,20 +18,24 @@ module MediaEmbed
       url.match soundcloud_regex
     end
 
+    def metacafe?(url)
+      url.match metacafe_regex
+    end
+
     protected
 
     def template_for(url, options = {})
-      template = if match = youtube?(url)
-                   Video.youtube_template(match[CODE], options)
-                 elsif match = vimeo?(url)
-                   Video.vimeo_template(match[CODE], options)
-                 elsif match = soundcloud?(url)
-                   Podcast.soundcloud_template(match[CODE], options)
-                 else
-                   ''
-                 end
-
-      return template
+      if match = youtube?(url)
+        Video.youtube_template(match[CODE], options)
+      elsif match = vimeo?(url)
+        Video.vimeo_template(match[CODE], options)
+      elsif match = soundcloud?(url)
+        Podcast.soundcloud_template(match[CODE], options)
+      elsif match = metacafe?(url)
+        Video.metacafe_template(match[CODE], options)
+      else
+        ''
+      end
     end
 
     def youtube_regex
@@ -44,6 +48,10 @@ module MediaEmbed
 
     def soundcloud_regex
       %r{soundcloud.com/(.*/[a-zA-Z0-9\-\_]*)}
+    end
+
+    def metacafe_regex
+      %r{metacafe.com/watch/(.*\/[a-zA-Z0-9\-\_]*)}
     end
   end
 end

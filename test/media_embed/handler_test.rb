@@ -18,6 +18,8 @@ class HandlerTest < Minitest::Test
 
   SOUNDCLOUD_URL = %w(soundcloud.com/username/code-for-podcast).freeze
 
+  METACAFE_URL = %w(metacafe.com/watch/8888/my-video).freeze
+
   def setup
     @klass = Class.new { include MediaEmbed::Handler }.new
   end
@@ -39,5 +41,10 @@ class HandlerTest < Minitest::Test
   test 'extracts code for soundcloud structure' do
     match = @klass.soundcloud?("irrelevantinfo#{SOUNDCLOUD_URL}")[CODE]
     assert_equal match, 'username/code-for-podcast'
+  end
+
+  test 'extracts code from metacafe url' do
+    match = @klass.metacafe?("irrelevantinfo#{METACAFE_URL}")[CODE]
+    assert_equal match, '8888/my-video'
   end
 end
