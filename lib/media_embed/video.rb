@@ -8,10 +8,12 @@ module MediaEmbed
       iframe("//player.vimeo.com/video/#{code}", options)
     end
 
+    def self.metacafe_template(code, options = {})
+      iframe("//metacafe.com/embed/#{code}", options)
+    end
 
     def self.iframe(source, options = {})
       %(<iframe src='#{source}' #{options.map { |key, value| "#{key}='#{value}'" }.join(' ')}></iframe>)
     end
   end
 end
-
