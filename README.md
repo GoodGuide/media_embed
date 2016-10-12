@@ -9,6 +9,7 @@ Currently supports:
 
 + Youtube
 + Vimeo
++ Metacafe
 
 ### Podcasts
 
