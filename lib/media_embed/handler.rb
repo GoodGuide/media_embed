@@ -1,5 +1,7 @@
 module MediaEmbed
   module Handler
+    extend self
+
     CODE = -1
 
     def embed(url, options = {})
@@ -20,6 +22,12 @@ module MediaEmbed
 
     def metacafe?(url)
       url.match metacafe_regex
+    end
+
+    def video?(url)
+      youtube?(url) ||
+        vimeo?(url) ||
+        metacafe?(url)
     end
 
     protected

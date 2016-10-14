@@ -18,7 +18,7 @@ class HandlerTest < Minitest::Test
 
   SOUNDCLOUD_URL = %w(soundcloud.com/username/code-for-podcast).freeze
 
-  METACAFE_URL = %w(metacafe.com/watch/8888/my-video).freeze
+  METACAFE_URLS = %w(metacafe.com/watch/8888/my-video).freeze
 
   def setup
     @klass = Class.new { include MediaEmbed::Handler }.new
@@ -44,7 +44,13 @@ class HandlerTest < Minitest::Test
   end
 
   test 'extracts code from metacafe url' do
-    match = @klass.metacafe?("irrelevantinfo#{METACAFE_URL}")[CODE]
-    assert_equal match, '8888/my-video'
+    METACAFE_URLS.map { |url| "irrelevantinfo#{url}" }.each do |url|
+      match = @klass.metacafe?("irrelevantinfo#{url}")[CODE]
+      assert_equal match, '8888/my-video'
+    end
+  end
+
+  test 'checks if a URL suggests a video' do
+    assert MediaEmbed::Handler.video?(YOUTUBE_URLS.first)
   end
 end
