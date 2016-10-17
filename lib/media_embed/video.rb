@@ -1,7 +1,7 @@
 module MediaEmbed
   class Video
     def self.youtube_template(code, options = {})
-      iframe("//www.youtube.com/embed/#{code}/enablejsapi=1", options)
+      iframe("//www.youtube.com/embed/#{code}?enablejsapi=1", options)
     end
 
     def self.vimeo_template(code, options = {})
